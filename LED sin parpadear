@@ -1,0 +1,26 @@
+#define BLYNK_PRINT Serial // Comenta esto para deshabilitar las copias y ahorrar espacio 
+#include <ESP8266_SoftSer.h> 
+#include <BlynkSimpleShieldEsp8266_SoftSer.h>
+// Establecer ESP8266 Serial object 
+#include <SoftwareSerial.h> 
+SoftwareSerial EspSerial (2, 3); // RX, TX
+ESP8266 wifi (EspSerial);
+// Deberías obtener Auth Token en la aplicación Blynk. 
+// Vaya a la configuración del proyecto (icono de la tuerca). 
+char auth [] = "a20b235cfa794f07981d050950fb4429";
+void setup () 
+{ 
+  // Establecer la velocidad en baudios de la consola 
+  Serial.begin (9600); 
+  retraso (10); 
+  // Establecer la velocidad en baudios de ESP8266 
+  // 9600 se recomienda para el software Serial 
+  EspSerial.begin (9600); 
+  retraso (10);
+  Blynk.begin (auth, wifi, "primer piso", "muda1884"); 
+}
+void loop () 
+{ 
+  Blynk.run (); 
+}
+ 
