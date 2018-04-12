@@ -1,0 +1,122 @@
+#define BLYNK_PRINT Serial // Comenta esto para deshabilitar las copias y ahorrar espacio 
+#include <ESP8266_SoftSer.h> 
+#include <BlynkSimpleShieldEsp8266_SoftSer.h>
+// Establecer ESP8266 Serial object 
+#include <SoftwareSerial.h> 
+SoftwareSerial EspSerial (2, 3); // RX, TX
+ESP8266 wifi (EspSerial);
+// Deberías obtener Auth Token en la aplicación Blynk. 
+// Vaya a la configuración del proyecto (icono de la tuerca). 
+char auth [] = "a20b235cfa794f07981d050950fb4429";
+#define red 11 
+#define green 10 
+#define blue 9 
+void setup () 
+{ 
+  // Establecer la velocidad en baudios de la consola 
+  Serial.begin (9600); 
+  retraso (10); 
+  // Establecer la velocidad en baudios de ESP8266 
+  // 9600 se recomienda para el software Serial 
+  EspSerial.begin (9600); 
+  retraso (10);
+  Blynk.begin (auth, wifi, "nombre de usuario", "contraseña"); // wifi nombre de usuario y contraseña 
+}
+BLYNK_WRITE (V1)  
+{ 
+  int x = param [0] .asInt (); 
+  
+    while (x == 1) 
+   { 
+    x = param.asInt (); 
+    int i = 0, j = 0, k = 0; 
+    analogWrite (rojo, 255); 
+    analogWrite (verde, 255); 
+    analogWrite (azul, 255); 
+    
+      for (int j = 0; j <20; j ++) 
+      { 
+       analogWrite (rojo, 0); 
+       analogWrite (verde, 255); 
+       analogWrite (azul, 255); 
+       retraso (100); 
+       analogWrite (rojo, 255); 
+       analogWrite (verde, 0); 
+       analogWrite (azul, 255); 
+       retraso (100); 
+       analogWrite (rojo, 255); 
+       analogWrite (verde, 255); 
+       analogWrite (azul, 0);
+       retraso (100); 
+        x = param.asInt (); 
+        if (x == 0) 
+        romper; 
+      } 
+    
+    analogWrite (rojo, 255); 
+    analogWrite (verde, 255); 
+    analogWrite (azul, 255); 
+    
+    for (int z = 0; z <10; z ++) 
+    { 
+    for (i = 0; i <= 180; i ++) 
+    { 
+            analogWrite (rojo, 180-i); 
+            retraso (2); 
+    } 
+    analogWrite (rojo, 255); 
+    para (j = 0; j <255; j ++) 
+    { 
+            analogWrite (verde, 255-j); 
+             retraso (2); 
+    } 
+    analogWrite (verde, 255); 
+    para (k = 0; k <255; k ++) 
+    { 
+            analogWrite (azul, 255-k);
+             retraso (2); 
+    } 
+    analogWrite (azul, 255); 
+     x = param.asInt (); 
+     if (x == 0) 
+     romper; 
+     
+    } 
+    
+    analogWrite (rojo, 255); 
+    analogWrite (verde, 255); 
+    analogWrite (azul, 255); 
+        for (int z = 0; z <5; z ++) 
+    {
+    para (j = 0; j <255; j ++) 
+    { 
+            analogWrite (verde, 255-j); 
+             retraso (20); 
+    } 
+    for (k = 0; k <255; k ++) 
+    { 
+            analogWrite (azul, 255-k); 
+             retraso (20); 
+    } 
+    
+        for (i = 0; i <= 180; i ++) 
+    { 
+            analogWrite (rojo, 180-i); 
+            retraso (20); 
+    } 
+    analogWrite (rojo, 180); 
+     x = param.asInt (); 
+     if (x == 0) 
+     romper; 
+    } 
+   if (x == 0) 
+   break; 
+  } 
+    analogWrite (rojo, 255); 
+    analogWrite (verde, 255); 
+    analogWrite (azul, 255); 
+}
+void loop () 
+{ 
+  Blynk.run (); 
+}
